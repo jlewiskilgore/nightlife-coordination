@@ -1,4 +1,4 @@
-# FCC Backend Projects - Voting App
+# FCC Backend Projects - Nightlife Coordination App
 
 This is a full stack app that allows users to indicate bars in
 their area which they are going to that night.
