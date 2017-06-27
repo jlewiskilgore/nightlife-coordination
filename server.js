@@ -6,23 +6,45 @@ var config = require('./config.js');
 
 var app = express();
 
-app.use(express.static('public'));
+var mongoose = require('mongoose');
+var dbURL = process.env.MONGOLAB_URI;
 
-app.set('view engine', 'ejs');
+mongoose.connect(dbURL || 'mongodb://localhost/nightlifedb', {
+		useMongoClient: true
+	});
 
-app.use(session({
-	secret: config.appConfig.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false
-}));
+var db = mongoose.connection;
 
-app.use(passport.initialize());
-app.use(passport.session());
+db.on('error', function(err) {
+	console.log(err);
+})
 
-routes(app, process.env, passport);
+db.once('open', function() {
+	console.log('Connected to database.');
 
-app.set('port', (process.env.PORT || 8080));
+	app.use(function(req, res, next) {
+		req.db = db;
+		next();
+	});
 
-app.listen(process.env.PORT || 8080, function() {
-	console.log('Server Listening on Port 8080');
+	app.use(express.static('public'));
+
+	app.set('view engine', 'ejs');
+
+	app.use(session({
+		secret: config.appConfig.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: false
+	}));
+
+	app.use(passport.initialize());
+	app.use(passport.session());
+
+	routes(app, process.env, passport);
+
+	app.set('port', (process.env.PORT || 8080));
+
+	app.listen(process.env.PORT || 8080, function() {
+		console.log('Server Listening on Port 8080');
+	});
 });
