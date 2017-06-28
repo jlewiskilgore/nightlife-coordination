@@ -20,4 +20,8 @@ module.exports = function(app, env, passport) {
 		function(req, res) {
 			res.redirect('/');
 		});
+
+	app.get('*', function(req, res) {
+		res.redirect('/');
+	});
 };
