@@ -11,4 +11,13 @@ module.exports = function(app, env, passport) {
 	app.get('/', function(req, res) {
 		res.render('pages/index');
 	});
+
+	app.get('/auth/twitter',
+		passport.authenticate('twitter'));
+
+	app.get('/auth/twitter/callback',
+		passport.authenticate('twitter', { failureRedirect: '/' }),
+		function(req, res) {
+			res.redirect('/');
+		});
 };
