@@ -2,6 +2,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var ObjectId = require('mongodb').ObjectId;
+var Yelp = require
 
 module.exports = function(app, env, passport) {
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +21,10 @@ module.exports = function(app, env, passport) {
 		function(req, res) {
 			res.redirect('/');
 		});
+
+	app.post('/search', function(req, res) {
+		console.log('yelp search...');
+	});
 
 	app.get('*', function(req, res) {
 		res.redirect('/');
