@@ -1,8 +1,8 @@
 var express = require('express');
 var session = require('express-session');
 var routes = require('./src/routes/routes.js');
-var passport = require('passport');
 var config = require('./config.js');
+var passport = require('passport');
 
 var app = express();
 

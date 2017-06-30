@@ -15,3 +15,10 @@ no longer want to go there.
 
 4. When unauthenticated users login, they do not have to search
 again.
+
+===============================================================
+
+This application is powered by the Yelp API.
+
+It also makes use of yelp-fusion API Client for NodeJS:
+https://github.com/tonybadguy/yelp-fusion

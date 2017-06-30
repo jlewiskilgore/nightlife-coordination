@@ -18,7 +18,9 @@
     "mongodb": "^2.2.27",
     "mongoose": "^4.10.4",
     "passport": "^0.3.2",
-    "passport-github": "^1.1.0"
+    "passport-github": "^1.1.0",
+    "request": "^2.81.0",
+    "yelp-fusion": "^1.0.3"
   },
   "main": "server.js",
   "devDependencies": {},
