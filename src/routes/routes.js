@@ -41,6 +41,24 @@ module.exports = function(app, env, passport) {
 
 	app.post('/search', function(req, res) {
 		console.log('yelp search...');
+		var apiBaseSearchUrl = 'https://api.yelp.com/v3/businesses/search?';
+		var searchTerm = "bar"; // This app only looks for "nightlife" spots using bar as a search
+		var searchLocation = "Dayton"; // TODO: Get this value from form input, validate if empty
+
+		var fullSearchApiUrl = apiBaseSearchUrl + "term=" + searchTerm + '&location=' + searchLocation;
+
+		var authParams = {
+			bearer: config.appConfig.YELP_AUTH_TOKEN
+		}
+
+		request.get(fullSearchApiUrl, {auth: authParams}, function(err, res) {
+			if(err) {
+				console.log(err);
+			}
+			else {
+				console.log(res);
+			}
+		});
 	});
 
 	app.get('*', function(req, res) {
