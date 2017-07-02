@@ -11,6 +11,16 @@
 			<input id="location" name="searchLocation" type="text">
 			<input type="submit" value="Search">
 		</form>
+		<br>
+		<br>
+		<div id="results-list">
+			<% if(searchResults) { %>
+				<% for(var i=0; i < searchResults.length; i++) { %>
+					<p><%= searchResults[i].name %></p>
+					<br>
+				<% } %>
+			<% } %>
+		</div>
 	</div>
 </body>
 </html>

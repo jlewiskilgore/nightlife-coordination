@@ -12,7 +12,10 @@ module.exports = function(app, env, passport) {
 	app.use(bodyParser.json());
 
 	app.get('/', function(req, res) {
-		res.render('pages/index');
+		res.render('pages/index', 
+			{
+				searchResults: [] // TODO: populate with default/last search results
+			});
 	});
 
 	app.post('/getToken', function(req, res) {
@@ -40,7 +43,6 @@ module.exports = function(app, env, passport) {
 		});
 
 	app.post('/search', function(req, res) {
-		console.log('yelp search...');
 		var apiBaseSearchUrl = 'https://api.yelp.com/v3/businesses/search?';
 		var searchTerm = "bar"; // This app only looks for "nightlife" spots using bar as a search
 		var searchLocation = req.body.searchLocation;
@@ -52,15 +54,15 @@ module.exports = function(app, env, passport) {
 				bearer: config.appConfig.YELP_AUTH_TOKEN
 			}
 
-			request.get(fullSearchApiUrl, {auth: authParams}, function(err, result) {
+			request.get(fullSearchApiUrl, {auth: authParams, json: true}, function(err, result) {
 				if(err) {
 					console.log(err);
 				}
 				else {
-					console.log(result);
+					var businessArr = result.body.businesses;
 					res.render('pages/index', 
 						{
-							searchResults: result
+							searchResults: businessArr
 						});
 				}
 			});
