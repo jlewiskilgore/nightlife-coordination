@@ -5,8 +5,8 @@ var User = require('../models/user');
 var init = require('./init');
 
 passport.use(new TwitterStrategy ({
-	apiKey: config.appConfig.TWITTER_API_KEY,
-	apiSecret: config.appConfig.TWITTER_API_SECRET,
+	consumerKey: config.appConfig.TWITTER_API_KEY,
+	consumerSecret: config.appConfig.TWITTER_API_SECRET,
 	callbackURL: config.appConfig.TWITTER_CALLBACK_URL
 	},
 	function(accessToken, refreshToken, profile, done) {

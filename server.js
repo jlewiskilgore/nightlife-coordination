@@ -37,6 +37,7 @@ db.once('open', function() {
 		saveUninitialized: false
 	}));
 
+	//require('./auth/passport.js')(passport);
 	app.use(passport.initialize());
 	app.use(passport.session());
 

@@ -2,6 +2,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var ObjectId = require('mongodb').ObjectId;
+var passport = require('../../auth/passport.js');
 var https = require('https');
 var request = require('request');
 var config = require('../../config.js');
@@ -13,9 +14,18 @@ module.exports = function(app, env, passport) {
 	app.use(bodyParser.json());
 
 	app.get('/', function(req, res) {
+		var businessList;
+
+		if(req.user) {
+			console.log('logged in user found');
+		}
+		else {
+			businessList = [];
+		}
+
 		res.render('pages/index', 
 			{
-				searchResults: [] // TODO: populate with default/last search results
+				searchResults: businessList
 			});
 	});
 

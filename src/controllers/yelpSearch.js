@@ -17,6 +17,7 @@ function yelpSearch() {
 			}
 			else {
 				var businessArr = result.body.businesses;
+				console.log(businessArr);
 				callback(businessArr);
 			}
 		});
