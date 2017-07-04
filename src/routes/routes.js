@@ -5,6 +5,7 @@ var ObjectId = require('mongodb').ObjectId;
 var https = require('https');
 var request = require('request');
 var config = require('../../config.js');
+var yelpSearch = require('../controllers/yelpSearch.js');
 
 module.exports = function(app, env, passport) {
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,28 +44,13 @@ module.exports = function(app, env, passport) {
 		});
 
 	app.post('/search', function(req, res) {
-		var apiBaseSearchUrl = 'https://api.yelp.com/v3/businesses/search?';
-		var searchTerm = "bar"; // This app only looks for "nightlife" spots using bar as a search
 		var searchLocation = req.body.searchLocation;
 
 		if(searchLocation) {
-			var fullSearchApiUrl = apiBaseSearchUrl + "term=" + searchTerm + '&location=' + searchLocation;
-
-			var authParams = {
-				bearer: config.appConfig.YELP_AUTH_TOKEN
-			}
-
-			request.get(fullSearchApiUrl, {auth: authParams, json: true}, function(err, result) {
-				if(err) {
-					console.log(err);
-				}
-				else {
-					var businessArr = result.body.businesses;
-					res.render('pages/index', 
-						{
-							searchResults: businessArr
-						});
-				}
+			yelpSearch.getBusinessList(searchLocation, function(businessArr) {
+				res.render('pages/index', {
+					searchResults: businessArr
+				});
 			});
 		}
 	});
