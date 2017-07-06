@@ -16,6 +16,7 @@ module.exports = function(app, env, passport) {
 	app.get('/', function(req, res) {
 		var businessList;
 
+		console.log(req.user);
 		if(req.user) {
 			console.log('logged in user found');
 		}
@@ -44,13 +45,13 @@ module.exports = function(app, env, passport) {
 		});
 	});
 
-	app.get('/auth/twitter',
-		passport.authenticate('twitter'));
+	app.get('/auth/google',
+		passport.authenticate('google', { scope : ['profile', 'email'] }));
 
-	app.get('/auth/twitter/callback',
-		passport.authenticate('twitter', { failureRedirect: '/' }),
+	app.get('/auth/google/callback',
+		passport.authenticate('google', { failureRedirect: '/'}),
 		function(req, res) {
-			res.redirect('/');
+			res.redirect('http://localhost:8080/');
 		});
 
 	app.post('/search', function(req, res) {

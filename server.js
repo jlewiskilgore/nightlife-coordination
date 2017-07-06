@@ -34,7 +34,8 @@ db.once('open', function() {
 	app.use(session({
 		secret: config.appConfig.SESSION_SECRET,
 		resave: false,
-		saveUninitialized: false
+		saveUninitialized: true,
+		cookie: { secure: false }
 	}));
 
 	//require('./auth/passport.js')(passport);
