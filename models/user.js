@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
 	username: String,
-	id: String,
+	userId: String,
 	lastLocationSearched: String
 });
 

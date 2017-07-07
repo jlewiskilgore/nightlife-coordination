@@ -16,7 +16,6 @@ module.exports = function(app, env, passport) {
 	app.get('/', function(req, res) {
 		var businessList;
 
-		console.log(req.user);
 		if(req.user) {
 			console.log('logged in user found');
 		}
@@ -46,15 +45,12 @@ module.exports = function(app, env, passport) {
 	});
 
 	app.get('/auth/google',
-		passport.authenticate('google', { scope : [
-    		'https://www.googleapis.com/auth/plus.login',
-    		'https://www.googleapis.com/auth/plus.profile.emails.read'] 
-		}));
+		passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 	app.get('/auth/google/callback',
 		passport.authenticate('google', { failureRedirect: '/'}),
 		function(req, res) {
-			res.redirect('http://localhost:8080/');
+			res.redirect('/');
 		});
 
 	app.post('/search', function(req, res) {
