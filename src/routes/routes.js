@@ -17,17 +17,23 @@ module.exports = function(app, env, passport) {
 		var businessList;
 
 		if(req.user) {
-			console.log('logged in user found');
-			console.log('User last location: '+ req.user.lastLocationSearched);
+			var userLocation = req.user.lastLocationSearched;
+
+			if(userLocation) {
+				yelpSearch.getBusinessList(userLocation, function(businessArr) {
+					res.render('pages/index', {
+						searchResults: businessArr
+					});
+				});
+			}
 		}
 		else {
 			businessList = [];
+			res.render('pages/index', 
+				{
+					searchResults: businessList
+				});
 		}
-
-		res.render('pages/index', 
-			{
-				searchResults: businessList
-			});
 	});
 
 	app.post('/getToken', function(req, res) {
