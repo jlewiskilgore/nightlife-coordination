@@ -7,6 +7,15 @@ body {
 	text-align: center;
 }
 
+#user-welcome {
+	text-align: center;
+}
+
+#google-login {
+	text-align: center;
+	margin: auto;
+}
+
 #location-search {
 	text-align: center;
 }

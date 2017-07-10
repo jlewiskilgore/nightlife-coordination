@@ -7,10 +7,14 @@
 	<div id="page-container">
 		<h1 id="page-title">Nightlife Coordination App</h1>
 		<br>
-		<form action="/auth/google" method="get">
-		    <input type="submit" value="Login with Google">
-		</form>
-		<br>
+		<% if(!user) { %>
+			<form id="google-login" action="/auth/google" method="get">
+			    <input type="submit" value="Login with Google">
+			</form>
+			<br>
+		<% } else { %>
+			<h3 id="user-welcome">Welcome, <%= user.username %>!</h3>
+		<% } %>
 		<form id="location-search" action="/search" method="post">
 			<input id="location" name="searchLocation" type="text">
 			<input type="submit" value="Search">

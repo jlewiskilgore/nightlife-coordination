@@ -22,6 +22,7 @@ module.exports = function(app, env, passport) {
 			if(userLocation) {
 				yelpSearch.getBusinessList(userLocation, function(businessArr) {
 					res.render('pages/index', {
+						user: req.user,
 						searchResults: businessArr
 					});
 				});
@@ -31,6 +32,7 @@ module.exports = function(app, env, passport) {
 			businessList = [];
 			res.render('pages/index', 
 				{
+					user: req.user,
 					searchResults: businessList
 				});
 		}
@@ -84,6 +86,7 @@ module.exports = function(app, env, passport) {
 		if(searchLocation) {
 			yelpSearch.getBusinessList(searchLocation, function(businessArr) {
 				res.render('pages/index', {
+					user: req.user,
 					searchResults: businessArr
 				});
 			});
