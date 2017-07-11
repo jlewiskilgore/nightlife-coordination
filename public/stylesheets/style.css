@@ -3,11 +3,7 @@ body {
 	color: white;
 }
 
-#page-title {
-	text-align: center;
-}
-
-#user-welcome {
+#page-title, #user-welcome, #results-title {
 	text-align: center;
 }
 

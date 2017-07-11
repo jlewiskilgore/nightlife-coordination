@@ -23,7 +23,8 @@ module.exports = function(app, env, passport) {
 				yelpSearch.getBusinessList(userLocation, function(businessArr) {
 					res.render('pages/index', {
 						user: req.user,
-						searchResults: businessArr
+						searchResults: businessArr,
+						location: userLocation
 					});
 				});
 			}
@@ -33,7 +34,8 @@ module.exports = function(app, env, passport) {
 			res.render('pages/index', 
 				{
 					user: req.user,
-					searchResults: businessList
+					searchResults: businessList,
+					location: ''
 				});
 		}
 	});
@@ -87,7 +89,8 @@ module.exports = function(app, env, passport) {
 			yelpSearch.getBusinessList(searchLocation, function(businessArr) {
 				res.render('pages/index', {
 					user: req.user,
-					searchResults: businessArr
+					searchResults: businessArr,
+					location: searchLocation
 				});
 			});
 		}

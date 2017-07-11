@@ -12,15 +12,19 @@
 			    <input type="submit" value="Login with Google">
 			</form>
 			<br>
+			<br>
 		<% } else { %>
 			<h3 id="user-welcome">Welcome, <%= user.username %>!</h3>
+			<br>
 		<% } %>
 		<form id="location-search" action="/search" method="post">
 			<input id="location" name="searchLocation" type="text">
 			<input type="submit" value="Search">
 		</form>
 		<br>
-		<br>
+		<% if(location) { %>
+			<h3 id="results-title">Results for <%= location %>: </h3>
+		<% } %>
 		<div id="results-list">
 			<% if(searchResults) { %>
 				<% for(var i=0; i < searchResults.length; i++) { %>
