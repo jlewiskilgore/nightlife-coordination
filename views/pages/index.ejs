@@ -28,11 +28,14 @@
 		<div id="results-list">
 			<% if(searchResults) { %>
 				<% for(var i=0; i < searchResults.length; i++) { %>
-					<div id="result">
-						<img id="result-image" src="<%= searchResults[i].image_url %>">
-						<p id="result-name"><%= searchResults[i].name %></p>
-						<p id="going-counter">0 Going</p>
-					</div>
+					<form action="/toggleUserGoing" method="get">
+						<div id="result">
+							<img id="result-image" src="<%= searchResults[i].image_url %>">
+							<p id="result-name"><%= searchResults[i].name %></p>
+							<p id="going-counter">0 Going</p>
+						</div>
+						<input type="submit" value="I'm Going!">
+					</form>
 					<hr>
 					<br>
 				<% } %>

@@ -96,6 +96,10 @@ module.exports = function(app, env, passport) {
 		}
 	});
 
+	app.get('/toggleUserGoing', function(req, res) {
+		console.log("toggleUserGoing");
+	})
+
 	app.get('*', function(req, res) {
 		res.redirect('/');
 	});
