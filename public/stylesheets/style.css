@@ -18,4 +18,21 @@ body {
 
 #results-list {
 	text-align: center;
+	margin: auto;
+	width: 400px;
+}
+
+#result-image, #result-name, #going-counter {
+	display: inline-block;
+}
+
+#result-image {
+	float: left;
+	vertical-align: middle;
+	height: 50px;
+	width: 50px;
+}
+
+#going-counter {
+	float: right;
 }
