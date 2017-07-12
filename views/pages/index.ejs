@@ -28,9 +28,12 @@
 		<div id="results-list">
 			<% if(searchResults) { %>
 				<% for(var i=0; i < searchResults.length; i++) { %>
-					<img id="result-image" src="<%= searchResults[i].image_url %>">
-					<p id="result-name"><%= searchResults[i].name %></p>
-					<p id="going-counter">0 Going</p>
+					<div id="result">
+						<img id="result-image" src="<%= searchResults[i].image_url %>">
+						<p id="result-name"><%= searchResults[i].name %></p>
+						<p id="going-counter">0 Going</p>
+					</div>
+					<hr>
 					<br>
 				<% } %>
 			<% } %>

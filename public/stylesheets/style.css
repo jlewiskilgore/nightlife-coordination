@@ -3,6 +3,10 @@ body {
 	color: white;
 }
 
+hr {
+	color: grey;
+}
+
 #page-title, #user-welcome, #results-title {
 	text-align: center;
 }
@@ -19,6 +23,7 @@ body {
 #results-list {
 	text-align: center;
 	margin: auto;
+	margin-top: 40px;
 	width: 400px;
 }
 
@@ -35,4 +40,9 @@ body {
 
 #going-counter {
 	float: right;
+}
+
+#result {
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
