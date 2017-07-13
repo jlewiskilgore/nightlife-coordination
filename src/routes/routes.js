@@ -7,6 +7,7 @@ var https = require('https');
 var request = require('request');
 var config = require('../../config.js');
 var yelpSearch = require('../controllers/yelpSearch.js');
+var UserGoing = require('../../models/userGoing');
 
 module.exports = function(app, env, passport) {
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -96,9 +97,34 @@ module.exports = function(app, env, passport) {
 		}
 	});
 
-	app.get('/toggleUserGoing', function(req, res) {
-		console.log("toggleUserGoing");
-	})
+	app.post('/toggleUserGoing', function(req, res) {
+		var db = req.db;
+		var userAttending = db.collection('userAttending');
+		
+		//console.log("toggleUserGoing");
+		//console.log(req.body.locationId);
+
+		var dateGoing = new Date();
+		dateGoing = dateGoing.toDateString();
+
+		if(req.user) {
+			var newUserGoing = new UserGoing({
+				userId: req.user.userId,
+				locationId: req.body.locationId,
+				dateGoing: dateGoing
+			});
+
+			newUserGoing.save(function(err, data) {
+				if(err) {
+					console.log(err);
+				}
+				else {
+					console.log("New UserGoing Saved!");
+					res.redirect('/');
+				}
+			});
+		}
+	});
 
 	app.get('*', function(req, res) {
 		res.redirect('/');
