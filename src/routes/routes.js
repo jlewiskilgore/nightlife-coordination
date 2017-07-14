@@ -7,6 +7,7 @@ var https = require('https');
 var request = require('request');
 var config = require('../../config.js');
 var yelpSearch = require('../controllers/yelpSearch.js');
+var userCount = require('../controllers/userCount.js');
 var UserGoing = require('../../models/userGoing');
 
 module.exports = function(app, env, passport) {
@@ -22,10 +23,13 @@ module.exports = function(app, env, passport) {
 
 			if(userLocation) {
 				yelpSearch.getBusinessList(userLocation, function(businessArr) {
-					res.render('pages/index', {
-						user: req.user,
-						searchResults: businessArr,
-						location: userLocation
+					userCount.countLocationList(req, businessArr, function(locationUserCountArr) {
+						res.render('pages/index', {
+							user: req.user,
+							searchResults: businessArr,
+							location: userLocation,
+							locationUserCount: locationUserCountArr
+						});
 					});
 				});
 			}
@@ -86,24 +90,22 @@ module.exports = function(app, env, passport) {
 			});
 		}
 
+
 		if(searchLocation) {
 			yelpSearch.getBusinessList(searchLocation, function(businessArr) {
-				res.render('pages/index', {
-					user: req.user,
-					searchResults: businessArr,
-					location: searchLocation
+				userCount.countLocationList(req, businessArr, function(locationUserCountArr) {
+					res.render('pages/index', {
+						user: req.user,
+						searchResults: businessArr,
+						location: searchLocation,
+						locationUserCount: locationUserCountArr
+					});
 				});
 			});
 		}
 	});
 
 	app.post('/toggleUserGoing', function(req, res) {
-		var db = req.db;
-		var userAttending = db.collection('userAttending');
-		
-		//console.log("toggleUserGoing");
-		//console.log(req.body.locationId);
-
 		var dateGoing = new Date();
 		dateGoing = dateGoing.toDateString();
 

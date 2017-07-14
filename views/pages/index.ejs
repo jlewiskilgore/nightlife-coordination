@@ -32,7 +32,9 @@
 						<div id="result">
 							<img id="result-image" src="<%= searchResults[i].image_url %>">
 							<p id="result-name"><%= searchResults[i].name %></p>
-							<p id="going-counter">0 Going</p>
+							<p id="going-counter">
+								<%= locationUserCount[i] %> Going
+							</p>
 						</div>
 						<input type="hidden" name="locationId" value="<%= searchResults[i].id %>">
 						<% if(user) { %>
