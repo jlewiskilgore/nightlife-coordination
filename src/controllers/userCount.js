@@ -1,5 +1,5 @@
 function userCount(locationList) {
-	this.getUserCount = function(req, location, callback) {
+	this.getUserCount = function(req, location, resultIndex, callback) {
 		var db = req.db;
 		var usergoings = db.collection('usergoings');
 
@@ -8,19 +8,21 @@ function userCount(locationList) {
 				console.log(err);
 			}
 			else {
-				callback(result);
+				callback(result, resultIndex);
 			}
 		});
 	};
 
 	this.countLocationList = function(req, locationList, callback) {
 		var usersAttendingArr = [];
+		var resultLength = 0;
 
 		for(var i=0; i < locationList.length; i++) {
-			this.getUserCount(req, locationList[i], function(locationUserCount) {
-				usersAttendingArr.push(locationUserCount);
+			this.getUserCount(req, locationList[i], i, function(locationUserCount, userCountIndex) {
+				usersAttendingArr[userCountIndex] = locationUserCount;
+				resultLength++;
 
-				if(usersAttendingArr.length == locationList.length) {
+				if(resultLength == locationList.length) {
 					callback(usersAttendingArr);
 				}
 			});
