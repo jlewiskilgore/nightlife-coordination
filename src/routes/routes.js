@@ -90,7 +90,6 @@ module.exports = function(app, env, passport) {
 			});
 		}
 
-
 		if(searchLocation) {
 			yelpSearch.getBusinessList(searchLocation, function(businessArr) {
 				userCount.countLocationList(req, businessArr, function(locationUserCountArr) {
@@ -106,23 +105,48 @@ module.exports = function(app, env, passport) {
 	});
 
 	app.post('/toggleUserGoing', function(req, res) {
-		var dateGoing = new Date();
-		dateGoing = dateGoing.toDateString();
+		var db = req.db;
+		var usergoings = db.collection('usergoings');
+
+		var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+		var localDate = new Date(Date.now() - timezoneOffset);
+		var localISODate = localDate.toISOString().slice(0,-1);
+
+		// Query on current date at beginning of day (after bars close night before)
+		var queryDate = localDate.setHours(5);
+		queryDate = localDate.setMinutes(0);
+		queryDate = localDate.setSeconds(0);
+		queryDate = new Date(queryDate);
+
+		var dateGoing = localISODate;
 
 		if(req.user) {
-			var newUserGoing = new UserGoing({
-				userId: req.user.userId,
-				locationId: req.body.locationId,
-				dateGoing: dateGoing
-			});
+			var searchQuery = {
+				"userId": req.user.userId,
+				"locationId": req.body.locationId,
+				"dateGoing": { "$gte": queryDate }
+			}
 
-			newUserGoing.save(function(err, data) {
-				if(err) {
-					console.log(err);
+			usergoings.findOne( searchQuery, function(err, result) {
+				if(!result) {
+					var newUserGoing = new UserGoing({
+						userId: req.user.userId,
+						locationId: req.body.locationId,
+						dateGoing: dateGoing
+					});
+
+					newUserGoing.save(function(err, data) {
+						if(err) {
+							console.log(err);
+						}
+						else {
+							console.log("New UserGoing Saved!");
+							res.redirect('/');
+						}
+					});
 				}
 				else {
-					console.log("New UserGoing Saved!");
-					res.redirect('/');
+					console.log("This user is already going to this location tonight!");
 				}
 			});
 		}

@@ -27,7 +27,7 @@ function userCount(locationList) {
 				}
 			});
 		}
-	}
+	};
 }
 
 module.exports = new userCount();
