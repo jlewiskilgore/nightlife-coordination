@@ -3,7 +3,20 @@ function userCount(locationList) {
 		var db = req.db;
 		var usergoings = db.collection('usergoings');
 
-		usergoings.count({ "locationId": location.id }, function(err, result) {
+		var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+		var localDate = new Date(Date.now() - timezoneOffset);
+
+		queryDate = localDate.setHours(5);
+		queryDate = localDate.setMinutes(0);
+		queryDate = localDate.setSeconds(0);
+		queryDate = new Date(queryDate);
+
+		var searchQuery = {
+			"locationId": location.id,
+			"dateGoing": { "$gte": queryDate }
+		}
+
+		usergoings.count(searchQuery, function(err, result) {
 			if(err) {
 				console.log(err);
 			}
