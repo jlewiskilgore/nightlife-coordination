@@ -77,7 +77,7 @@ function userCount(locationList) {
 		var resultLength = 0;
 
 		for(var i=0; i < locationList.length; i++) {
-			this.isCurrentUserGoing(req, locationList[i], i, user, function(isUserGoing, locationIndex) {
+			this.isCurrentUserGoing(req, locationList[i], i, currentUser, function(isUserGoing, locationIndex) {
 				currentUserAttendingArr[locationIndex] = isUserGoing;
 				resultLength++;
 

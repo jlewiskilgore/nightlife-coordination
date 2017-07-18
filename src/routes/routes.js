@@ -24,11 +24,20 @@ module.exports = function(app, env, passport) {
 			if(userLocation) {
 				yelpSearch.getBusinessList(userLocation, function(businessArr) {
 					userCount.countLocationList(req, businessArr, function(locationUserCountArr) {
-						res.render('pages/index', {
-							user: req.user,
-							searchResults: businessArr,
-							location: userLocation,
-							locationUserCount: locationUserCountArr
+						var userId;
+						
+						if(req.user) {
+							userId = req.user.userId;
+						}
+						
+						userCount.currentUserGoingByLocation(req, businessArr, userId, function(isUserGoingArr) {
+							res.render('pages/index', {
+								user: req.user,
+								searchResults: businessArr,
+								location: userLocation,
+								locationUserCount: locationUserCountArr,
+								userGoing: isUserGoingArr
+							});
 						});
 					});
 				});
@@ -93,11 +102,20 @@ module.exports = function(app, env, passport) {
 		if(searchLocation) {
 			yelpSearch.getBusinessList(searchLocation, function(businessArr) {
 				userCount.countLocationList(req, businessArr, function(locationUserCountArr) {
-					res.render('pages/index', {
-						user: req.user,
-						searchResults: businessArr,
-						location: searchLocation,
-						locationUserCount: locationUserCountArr
+					var userId;
+					
+					if(req.user) {
+						userId = req.user.userId;
+					}
+					
+					userCount.currentUserGoingByLocation(req, businessArr, userId, function(isUserGoingArr) {
+						res.render('pages/index', {
+							user: req.user,
+							searchResults: businessArr,
+							location: searchLocation,
+							locationUserCount: locationUserCountArr,
+							userGoing: isUserGoingArr
+						});
 					});
 				});
 			});
