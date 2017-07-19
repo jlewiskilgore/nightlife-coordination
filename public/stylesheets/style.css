@@ -27,7 +27,8 @@ hr {
 	width: 400px;
 }
 
-#result-image, #result-name, #going-counter {
+#result-image, #result-name, #going-counter, 
+#user-going-message, #remove-going-btn {
 	display: inline-block;
 }
 
@@ -45,4 +46,16 @@ hr {
 #result {
 	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+#user-going-options {
+	text-align: center;
+}
+
+#user-going-message {
+	margin-right: 50px;
+}
+
+#remove-going-btn {
+	margin-left: 70px;
 }

@@ -122,7 +122,7 @@ module.exports = function(app, env, passport) {
 		}
 	});
 
-	app.post('/toggleUserGoing', function(req, res) {
+	app.post('/addUserGoing', function(req, res) {
 		var db = req.db;
 		var usergoings = db.collection('usergoings');
 
@@ -168,6 +168,13 @@ module.exports = function(app, env, passport) {
 				}
 			});
 		}
+	});
+
+	app.post('/deleteUserGoing', function(req, res) {
+		var db = req.db;
+		var usergoings = db.collection('usergoings');
+
+		console.log("delete user going!");
 	});
 
 	app.get('*', function(req, res) {

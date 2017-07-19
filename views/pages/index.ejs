@@ -28,7 +28,7 @@
 		<div id="results-list">
 			<% if(searchResults) { %>
 				<% for(var i=0; i < searchResults.length; i++) { %>
-					<form action="/toggleUserGoing" method="post">
+					<form action="/addUserGoing" method="post">
 						<div id="result">
 							<img id="result-image" src="<%= searchResults[i].image_url %>">
 							<p id="result-name"><%= searchResults[i].name %></p>
@@ -37,8 +37,12 @@
 							</p>
 						</div>
 						<input type="hidden" name="locationId" value="<%= searchResults[i].id %>">
+						<input type="hidden" name="userId" value="<%= user.userId %>">
 						<% if(userGoing[i]) { %>
-							<p>YOU ARE GOING!</p>
+							<div id="user-going-options">
+								<p id="user-going-message">YOU ARE GOING!</p>
+								<input id="remove-going-btn" type="submit" value="No Longer Going?" formaction="/deleteUserGoing" formmethod="post">
+							</div>
 						<% } else if(user) { %>
 							<input type="submit" value="I'm Going!">
 						<% } %>
