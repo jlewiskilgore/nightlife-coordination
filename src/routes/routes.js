@@ -174,7 +174,22 @@ module.exports = function(app, env, passport) {
 		var db = req.db;
 		var usergoings = db.collection('usergoings');
 
-		console.log("delete user going!");
+		var timezoneOffset = (new Date()).getTimezoneOffset() * 60000;
+		var localDate = new Date(Date.now() - timezoneOffset);
+		var queryDate = localDate.setHours(5);
+		queryDate = localDate.setMinutes(0);
+		queryDate = localDate.setSeconds(0);
+		queryDate = new Date(queryDate);
+
+		usergoings.remove({ "userId": req.body.userId, "locationId": req.body.locationId, "dateGoing": { "$gte": queryDate } }, function(err) {
+			if(err) {
+				console.log(err);
+			}
+			else {
+				console.log("UserGoing Deleted!");
+				res.redirect('/');
+			}
+		});
 	});
 
 	app.get('*', function(req, res) {
