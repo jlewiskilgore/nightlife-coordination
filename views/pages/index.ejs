@@ -37,7 +37,9 @@
 							</p>
 						</div>
 						<input type="hidden" name="locationId" value="<%= searchResults[i].id %>">
-						<input type="hidden" name="userId" value="<%= user.userId %>">
+						<% if(user) { %>
+							<input type="hidden" name="userId" value="<%= user.userId %>">
+						<% } %>
 						<% if(userGoing[i]) { %>
 							<div id="user-going-options">
 								<p id="user-going-message">YOU ARE GOING!</p>
