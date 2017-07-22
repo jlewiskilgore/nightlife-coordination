@@ -18,6 +18,14 @@ again.
 
 ===============================================================
 
+This app is hosted at:
+
+```
+https://damp-ridge-50231.herokuapp.com/
+```
+
+===============================================================
+
 This application is powered by the Yelp API.
 
 It also makes use of yelp-fusion API Client for NodeJS:
